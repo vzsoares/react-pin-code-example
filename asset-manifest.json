@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-pin-code-example/static/css/main.073c9b0a.css",
+    "main.js": "/react-pin-code-example/static/js/main.dc3ebdf4.js",
+    "static/js/787.b91b569a.chunk.js": "/react-pin-code-example/static/js/787.b91b569a.chunk.js",
+    "index.html": "/react-pin-code-example/index.html",
+    "main.073c9b0a.css.map": "/react-pin-code-example/static/css/main.073c9b0a.css.map",
+    "main.dc3ebdf4.js.map": "/react-pin-code-example/static/js/main.dc3ebdf4.js.map",
+    "787.b91b569a.chunk.js.map": "/react-pin-code-example/static/js/787.b91b569a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.dc3ebdf4.js"
+  ]
+}
