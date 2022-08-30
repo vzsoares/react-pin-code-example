@@ -13,20 +13,29 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "1rem",
+            padding: "1rem",
+            height: "40vh",
+          }}
+        >
           {[...new Array(pinSize)].map((_, i) => (
             <input
               value={PIN[i] ?? ""}
               onKeyDown={handleKeyDown}
-              autoFocus={() => PIN[i] !== undefined}
               maxLength="1"
+              inputMode="numeric"
               style={{
-                width: "5rem",
-                height: "5rem",
+                maxWidth: "5rem",
+                maxHeight: "5rem",
+                height: "100%",
+                width: "100%",
                 fontSize: "2rem",
                 caretColor: "transparent",
                 textAlign: "center",
-                outline: `${PIN[i] !== undefined ? "4px solid orange":"0"}`,
+                outline: `${PIN[i] !== undefined ? "4px solid orange" : "0"}`,
               }}
             />
           ))}
