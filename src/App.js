@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import img from "./icon.png";
 
 function App() {
   const [PIN, setPIN] = useState("");
@@ -40,6 +41,15 @@ function App() {
             />
           ))}
         </div>
+        <a
+          href="https://github.com/vzsoares/react-pin-code-example"
+          target="_blank"
+          rel="noreferrer"
+          className="github"
+          style={{ textDecoration: "none", color: "#595B5F" }}
+        >
+          <img src={img} alt="icon" />
+        </a>
       </header>
     </div>
   );
