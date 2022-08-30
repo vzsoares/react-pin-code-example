@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+---
+title: 'React Pin-Code Input'
+date: 'August 29, 2022'
+excerpt: 'React pin-code input no libraries'
+cover_image: '/images/posts/REACT-PIN-IMG8.png'
+---
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+If you had the need to create a `Pin-code` input before you probably found many external libraries online to solved your problem, and when it 
+comes to raw solutions you problably found very complex solutions involving useRef for example.
 
-## Available Scripts
+I know i've been througth that, so i created a super simple yet usefull react pin-input, and this is what the final result:
 
-In the project directory, you can run:
+![react-pin-code](https://user-images.githubusercontent.com/86134825/187494354-38cc624c-7389-4238-94a4-706dc58d8e11.gif)
 
-### `npm start`
+[live demo](https://vzsoares.github.io/react-pin-code-example/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The main idea here is to use a ´string´ and the ´onKeyDown´ event on a input, heres how:
 
-### `npm test`
+First lets create a array to dertemine our pin code size
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+const pinSize = 5; 
+const pinArray = [...new Array(pinSize)];
+```
 
-### `npm run build`
+The next step is to create our PIN state and map the pinArray to create our inputs:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+const [PIN, setPIN] = useState("");
+...
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+{pinArray.map((_,i) => (
+  <input 
+   value={PIN[i] ?? ""}
+  />
+))}
+```
+ 
+As you can see the major logic here is to have and manipulate a string and display it accordingly to the index. Also the [nullish operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator) is used to avoid a undefined value.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Lets then create our handler function based on the onKeyDown event:
 
-### `npm run eject`
+```
+...
+  function handleKeyDown(event){
+    if (e.key === "Backspace") setPIN(PIN.slice(0, -1));
+    else if (PIN.length + 1 > pinSize) return;
+    else setPIN(PIN + e.key[0]);
+  }
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This implementation allows basicly any input but you can easily filter that using `e.key.charCodeAt(0)` to get de ASCII value and use it to filter the input value.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Now just implement it as folows:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+  {pinArray.map((_,i) => (
+   <input 
+     value={PIN[i] ?? ""}
+     onKeyDown={handleKeyDown}
+   />
+  ))}
+```
+Done, simple isn't it? Now just throw in some styles and you ready to go!!
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Full Code with some styles:
+```
+export default function App() {
+  const [PIN, setPIN] = useState("");
+  const pinSize = 5;
 
-## Learn More
+  function handleKeyDown(e) {
+    if (e.key === "Backspace") setPIN(PIN.slice(0, -1));
+    else if (PIN.length + 1 > pinSize) return;
+    else setPIN(PIN + e.key[0]);
+  }
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  return (
+    <>
+        <div style={{ display: "flex", gap: "1rem" }}>
+          {[...new Array(pinSize)].map((_, i) => (
+            <input
+              value={PIN[i] ?? ""}
+              onKeyDown={handleKeyDown}
+              maxLength="1"
+              style={{
+                width: "5rem",
+                height: "5rem",
+                fontSize: "2rem",
+                caretColor: "transparent",
+                textAlign: "center",
+                outline: `${PIN[i] !== undefined ? "4px solid orange":"0"}`,
+              }}
+            />
+          ))}
+        </div>
+    </>
+  );
+}
+```
